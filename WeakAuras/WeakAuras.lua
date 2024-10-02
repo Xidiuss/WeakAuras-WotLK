@@ -1238,9 +1238,47 @@ local function scanForLoadsImpl(toCheck, event, arg1, ...)
     return
   end
 
-  local player, realm, zone = UnitName("player"), GetRealmName(), GetRealZoneText();
-  local faction = UnitFactionGroup("player")
-  local zoneId = GetCurrentMapAreaID()
+subZoneIDs = {
+    -- Ulduar Subzones
+    ["Formation Grounds"] = 1,            -- Flame Leviathan
+    ["Razorscale's Aerie"] = 2,           -- Razorscale
+    ["The Colossal Forge"] = 3,           -- Ignis the Furnace Master
+    ["The Scrapyard"] = 4,                -- XT-002 Deconstructor
+    ["The Assembly of Iron"] = 5,         -- Iron Council
+    ["The Shattered Walkway"] = 6,        -- Kologarn
+    ["The Observation Ring"] = 7,         -- Auriaya
+    ["The Spark of Imagination"] = 8,     -- Mimiron
+    ["The Conservatory of Life"] = 9,     -- Freya
+	  ["The Halls of Winter"] = 10,         -- Hodir
+	  ["The Clash of Thunder"] = 11,        -- Thorim
+    ["The Descent into Madness"] = 12,    -- General Vezax
+    ["The Prison of Yogg-Saron"] = 13,    -- Yogg-Saron
+    ["The Celestial Planetarium"] = 14,   -- Algalon the Observer
+    -- Trial of the Grand Crusader
+	  ["The Icy Depths"] = 19, 			  -- Anub'arak
+    -- Icecrown Citadel Subzones
+    ["The Spire"] = 20,                   -- Lord Marrowgar
+    ["Oratory of the Damned"] = 21,       -- Lady Deathwhisper
+    ["Rampart of Skulls"] = 22,           -- Gunship Battle
+    ["Deathbringer's Rise"] = 23,         -- Deathbringer Saurfang
+    ["The Plagueworks"] = 24,             -- Festergut, Rotface
+    ["Purticide's Laboratory"] = 25,      -- Professor Putricide
+    ["The Crimson Hall"] = 26,            -- Blood Prince Council
+    ["The Sanctum of Blood"] = 27,        -- Blood-Queen Lana'thel
+    ["The Frostwing Halls"] = 28,         -- Valithria Dreamwalker
+    ["The Frost Queen's Lair"] = 29,      -- Sindragosa
+    ["The Frozen Throne"] = 30,           -- The Lich King
+};
+
+function GetCurrentSubZoneID()
+    local subZone = GetSubZoneText();
+    return subZoneIDs[subZone] or 0; -- Jeśli nie ma subzone w tablicy, zwróć 0
+end
+
+
+ local player, realm, zone, subZoneIDs = UnitName("player"), GetRealmName(), GetRealZoneText(), GetCurrentSubZoneID();
+ local faction = UnitFactionGroup("player")
+ local zoneId = GetCurrentMapAreaID()
 
   local _, class = UnitClass("player");
 
@@ -1264,8 +1302,8 @@ local function scanForLoadsImpl(toCheck, event, arg1, ...)
     if (data and not data.controlledChildren) then
       local loadFunc = loadFuncs[id];
       local loadOpt = loadFuncsForOptions[id];
-      shouldBeLoaded = loadFunc and loadFunc("ScanForLoads_Auras", inCombat, alive, pvp, vehicle, vehicleUi, group, player, realm, class, faction, playerLevel, zone, zoneId, size, difficulty);
-      couldBeLoaded =  loadOpt and loadOpt("ScanForLoads_Auras",   inCombat, alive, pvp, vehicle, vehicleUi, group, player, realm, class, faction, playerLevel, zone, zoneId, size, difficulty);
+      shouldBeLoaded = loadFunc and loadFunc("ScanForLoads_Auras", inCombat, alive, pvp, vehicle, vehicleUi, group, player, realm, class, faction, playerLevel, zone, zoneId, subZoneIDs, size, difficulty);
+      couldBeLoaded =  loadOpt and loadOpt("ScanForLoads_Auras",   inCombat, alive, pvp, vehicle, vehicleUi, group, player, realm, class, faction, playerLevel, zone, zoneId, subZoneIDs, size, difficulty);
 
       if(shouldBeLoaded and not loaded[id]) then
         changed = changed + 1;

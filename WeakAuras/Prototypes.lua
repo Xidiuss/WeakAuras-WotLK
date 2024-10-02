@@ -924,6 +924,48 @@ Private.load_prototype = {
 	  end
     },
     {
+      name = "subZoneId",
+      display = L["SubZone ID(s)"],
+      type = "string",
+      init = "arg",
+      test = "WeakAuras.CheckNumericIds(%q, subZoneId)",
+      events = {"ZONE_CHANGED", "ZONE_CHANGED_INDOORS", "ZONE_CHANGED_NEW_AREA", "VEHICLE_UPDATE"},
+      desc = function()
+      return "\n|cffffd200SubZone IDs and Names:\n|r\n"
+      .. "|cff008000Ulduar Subzones|r\n"
+      .. "|cffff0000 1|r - Formation Grounds |cffffd200[Leviathan]|r\n"
+      .. "|cffff0000 2|r - Razorscale's Aerie |cffffd200[Razorscale]|r\n"
+      .. "|cffff0000 3|r - The Colossal Forge |cffffd200[Ignis]|r\n"
+      .. "|cffff0000 4|r - The Scrapyard |cffffd200[XT-002]|r\n"
+      .. "|cffff0000 5|r - The Assembly of Iron |cffffd200[Iron Council]|r\n"
+      .. "|cffff0000 6|r - The Shattered Walkway |cffffd200[Kologarn]|r\n"
+      .. "|cffff0000 7|r - The Observation Ring |cffffd200[Auriaya]|r\n"
+      .. "|cffff0000 8|r - The Spark of Imagination |cffffd200[Mimiron]|r\n"
+      .. "|cffff0000 9|r - The Conservatory of Life |cffffd200[Freya]|r\n"
+      .. "|cffff0000 10|r - The Halls of Winter |cffffd200[Hodir]|r\n"
+      .. "|cffff0000 11|r - The Clash of Thunder |cffffd200[Thorim]|r\n"
+      .. "|cffff0000 12|r - The Descent into Madness |cffffd200[Vezax]|r\n"
+      .. "|cffff0000 13|r - The Prison of Yogg-Saron |cffffd200[Yogg-Saron]|r\n"
+      .. "|cffff0000 14|r - The Celestial Planetarium |cffffd200[Algalon]|r\n\n"
+      .. "|cffbf6000Trial of the Grand Crusader|r\n"
+      .. "|cffff0000 19|r - The Icy Depths |cffffd200[Anub'arak]|r\n\n"
+      .. "|cff00bfbfIcecrown Citadel Subzones|r\n"
+      .. "|cffff0000 20|r - The Spire |cffffd200[L. Marrowgar]|r\n"
+      .. "|cffff0000 21|r - Oratory of the Damned |cffffd200[L. Deathwhisper]|r\n"
+      .. "|cffff0000 22|r - Rampart of Skulls |cffffd200[Gunship]|r\n"
+      .. "|cffff0000 23|r - Deathbringer's Rise |cffffd200[Deathbringer]|r\n"
+      .. "|cffff0000 24|r - The Plagueworks |cffffd200[Festergut, Rotface]|r\n"
+      .. "|cffff0000 25|r - Purticide's Laboratory |cffffd200[Professor]|r\n"
+      .. "|cffff0000 26|r - The Crimson Hall |cffffd200[Blood Council]|r\n"
+      .. "|cffff0000 27|r - The Sanctum of Blood |cffffd200[Queen Lana'thel]|r\n"
+      .. "|cffff0000 28|r - The Frostwing Halls |cffffd200[Valithria]|r\n"
+      .. "|cffff0000 29|r - The Frost Queen's Lair |cffffd200[Sindragosa]|r\n"
+      .. "|cffff0000 30|r - The Frozen Throne |cffffd200[The Lich King]|r\n\n"
+      .. string.format("\n|cffffd200%s|r%s: |cffff0000%d|r\n\n%s",
+        L["Current SubZone\n"], GetSubZoneText(), GetCurrentSubZoneID(), L["Supports multiple entries, separated by commas"])
+      end
+    },
+    {
       name = "size",
       display = L["Instance Size Type"],
       type = "multiselect",
